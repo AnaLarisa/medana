@@ -1,0 +1,12 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/Medana.API/bin
+/Medana.API/obj
+/Medana.API/Medana.API.csproj.user
+/Medana.Web/.vs
+/Medana.Web/bin
+/Medana.Web/obj
+/Medana.Web/Medana.Web.csproj.user
