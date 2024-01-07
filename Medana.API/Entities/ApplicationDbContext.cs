@@ -1,14 +1,13 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
-namespace Medana.API.Entities
-{
-    public class ApplicationDbContext : DbContext
-    {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
-            : base(options)
-        {
-        }
+namespace Medana.API.Entities;
 
-        public DbSet<Patient> Patients { get; set; }
+public class ApplicationDbContext : DbContext
+{
+    public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
+        : base(options)
+    {
     }
+
+    public DbSet<Patient> Patients { get; set; }
 }
