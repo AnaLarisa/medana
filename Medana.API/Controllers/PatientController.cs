@@ -1,4 +1,6 @@
 using Medana.API.Entities;
+using Medana.API.Entities.DTOs;
+using Medana.API.Helpers;
 using Medana.API.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,9 +21,9 @@ public class PatientController : ControllerBase
 
     [HttpGet]
     [Route("all")]
-    public IEnumerable<Patient> GetAllPatients()
+    public IEnumerable<PatientDTO> GetAllPatients()
     {
-        return _patientService.GetAllPatients();
+        return _patientService.GetAllPatientsWithDetails();
     }
 
     [HttpGet]
@@ -33,8 +35,16 @@ public class PatientController : ControllerBase
 
     [HttpPost]
     [Route("add")]
-    public bool AddPatient(Patient patient)
+    public bool AddPatient(PatientDTO patientDto)
     {
+        //check the model
+        if (!ModelState.IsValid)
+        {
+            return false;
+        }
+
+        var patient = DTOHelper.PatientDTOToPatient(patientDto);
+
         return _patientService.AddPatient(patient);
     }
 

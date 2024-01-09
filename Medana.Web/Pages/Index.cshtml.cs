@@ -24,7 +24,6 @@ public class IndexModel : PageModel
     {
         var dummyPatients = new List<Patient>();
 
-        // Dummy Patient 1
         var patient1 = new Patient
         {
             Id = 1,
@@ -32,10 +31,10 @@ public class IndexModel : PageModel
             {
                 FirstName = "John",
                 LastName = "Doe",
-                DateOfBirth = new DateTime(1985, 5, 15),
+                DateOfBirth = new DateTime(2024, 1, 3),
                 Sex = "Male",
                 Address = "123 Main St, Cityville",
-                CNP = "1890515001234", // Replace with a valid CNP
+                CNP = "6240103078645",
                 PhoneNumber = "555-1234",
                 Occupation = "Software Engineer",
                 Email = "john.doe@example.com"
@@ -69,10 +68,10 @@ public class IndexModel : PageModel
             {
                 FirstName = "Jane",
                 LastName = "Smith",
-                DateOfBirth = new DateTime(1990, 8, 22),
+                DateOfBirth = new DateTime(2009, 1, 17),
                 Sex = "Female",
                 Address = "456 Oak St, Townsville",
-                CNP = "2900822005678", // Replace with a valid CNP
+                CNP = "6090117078076", // Replace with a valid CNP
                 PhoneNumber = "555-5678",
                 Occupation = "Teacher",
                 Email = "jane.smith@example.com"

@@ -1,10 +1,11 @@
 ﻿using Medana.API.Entities;
+using Medana.API.Entities.DTOs;
 
 namespace Medana.API.Services;
 
 public interface IPatientService
 {
-    IEnumerable<Patient> GetAllPatients();
+    IEnumerable<PatientDTO> GetAllPatientsWithDetails();
     Patient GetPatientById(int id);
 
     bool AddPatient(Patient patient);

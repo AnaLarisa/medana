@@ -1,4 +1,6 @@
 ﻿using Medana.API.Entities;
+using Medana.API.Entities.DTOs;
+using Medana.API.Helpers;
 using Medana.API.Repositories;
 
 namespace Medana.API.Services;
@@ -13,9 +15,18 @@ public class PatientService : IPatientService
     }
 
 
-    public IEnumerable<Patient> GetAllPatients()
+    public IEnumerable<PatientDTO> GetAllPatientsWithDetails()
     {
-        return _patientRepository.GetAllPatients();
+        var patients = _patientRepository.GetAllPatients();
+
+        var patientsWithDetails = patients.Select(patient => new PatientDTO
+        {
+            PersonalInformation = DTOHelper.MapToPersonalInformationDTO(patient.PersonalInformation),
+            MedicalHistory = DTOHelper.MapToMedicalHistoryDTO(patient.MedicalHistory),
+            InsuranceInformation = DTOHelper.MapToInsuranceInformationDTO(patient.InsuranceInformation)
+        });
+
+        return patientsWithDetails;
     }
 
     public Patient GetPatientById(int id)

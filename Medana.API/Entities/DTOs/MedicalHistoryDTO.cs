@@ -1,26 +1,17 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Medana.API.Entities;
+namespace Medana.API.Entities.DTOs;
 
-public class MedicalHistory
+[NotMapped]
+public class MedicalHistoryDTO
 {
-    [Key]
-    [ForeignKey("Patient")]
-    public int Id { get; set; }
-
+    [Required(ErrorMessage = "Medical conditions are required.")]
     public List<string> MedicalConditions { get; set; }
-
-    public virtual List<Consultation> Consultations { get; set; }
-
-    public virtual List<Medication> MedicationAndDosages { get; set; }
-
+    public List<ConsultationDTO> Consultations { get; set; }
+    public List<MedicationDTO> MedicationAndDosages { get; set; }
     public List<string> Allergies { get; set; }
-
     public List<string> SurgicalHistory { get; set; }
-
     public List<string> ImmunizationHistory { get; set; }
-
     public string FamilyMedicalHistory { get; set; }
 }
-

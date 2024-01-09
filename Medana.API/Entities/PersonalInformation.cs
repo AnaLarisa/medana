@@ -1,10 +1,15 @@
 ﻿using Medana.API.Attributes;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Medana.API.Entities;
 
 public class PersonalInformation
 {
+    [Key]
+    [ForeignKey("Patient")]
+    public int Id { get; set; }
+
     [Required(ErrorMessage = "First name is required.")]
     public string FirstName { get; set; }
 

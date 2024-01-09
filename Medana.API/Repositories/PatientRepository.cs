@@ -13,7 +13,8 @@ public class PatientRepository : IPatientRepository
 
     public IEnumerable<Patient> GetAllPatients()
     {
-        return _dbContext.Patients.ToList();
+        var patients = _dbContext.Patients.ToList();
+        return patients;
     }
 
 

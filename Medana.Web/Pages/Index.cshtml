@@ -22,7 +22,7 @@ var patients = Model.Patients;
     <div class="container mt-5">
         <h2>Patients List</h2>
         <table class="table table-bordered" border="1">
-            <thead>
+            <thead class="thead-dark">
                 <tr>
                     <th>ID</th>
                     <th>First Name</th>
@@ -44,10 +44,10 @@ var patients = Model.Patients;
                     <th>Insurance Policy Number</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="table-hover">
                 @foreach (var patient in patients)
-                {
-                    <tr>
+            {
+                <tr>
                         <td>@patient.Id</td>
                         <td>@patient.PersonalInformation.FirstName</td>
                         <td>@patient.PersonalInformation.LastName</td>
@@ -61,9 +61,9 @@ var patients = Model.Patients;
                         <td>@string.Join(", ", patient.MedicalHistory.MedicalConditions)</td>
                         <td>
                             @foreach (var medication in patient.MedicalHistory.MedicationAndDosages)
-                            {
-                                <div>@medication.MedicationName - @medication.Dosage - @medication.Frequency</div>
-                            }
+                        {
+                            <div>@medication.MedicationName - @medication.Dosage - @medication.Frequency</div>
+                        }
                         </td>
                         <td>@string.Join(", ", patient.MedicalHistory.Allergies)</td>
                         <td>@string.Join(", ", patient.MedicalHistory.SurgicalHistory)</td>
@@ -72,7 +72,7 @@ var patients = Model.Patients;
                         <td>@patient.InsuranceInformation.InsuranceProvider</td>
                         <td>@patient.InsuranceInformation.InsurancePolicyNumber</td>
                     </tr>
-                }
+            }
             </tbody>
         </table>
     </div>

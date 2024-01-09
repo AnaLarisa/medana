@@ -2,6 +2,7 @@ using Medana.API.Entities;
 using Medana.API.Repositories;
 using Medana.API.Services;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,7 +16,10 @@ builder.Services.AddSwaggerGen();
 var dbConnectionString = builder.Configuration.GetConnectionString("DatabaseConnectionString");
 //add application db context
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
-    options.UseSqlServer(dbConnectionString));
+{
+    options.UseSqlServer(dbConnectionString, options => options.EnableRetryOnFailure(maxRetryCount: 5, maxRetryDelay: TimeSpan.FromSeconds(30), errorNumbersToAdd: null));
+    options.UseLazyLoadingProxies();
+});
 
 builder.Services.AddScoped<IPatientRepository, PatientRepository>();
 builder.Services.AddScoped<IPatientService, PatientService>();
