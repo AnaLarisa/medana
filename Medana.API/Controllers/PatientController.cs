@@ -37,7 +37,6 @@ public class PatientController : ControllerBase
     [Route("add")]
     public bool AddPatient(PatientDTO patientDto)
     {
-        //check the model
         if (!ModelState.IsValid)
         {
             return false;

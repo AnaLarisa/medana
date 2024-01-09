@@ -1,7 +1,23 @@
+using Medana.Web.Client;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+var medanaApiUrl = Environment.GetEnvironmentVariable("MedanaApiUrl");
+if (medanaApiUrl != null)
+{
+    var globalHttpClient = new HttpClient
+    {
+        BaseAddress = new Uri(medanaApiUrl)
+    };
+    builder.Services.AddScoped<IClient>(_ => new Client(globalHttpClient));
+}
+else
+{
+    throw new Exception("MedanaApiUrl not set");
+}
 
 var app = builder.Build();
 
