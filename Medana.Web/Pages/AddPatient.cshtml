@@ -5,100 +5,113 @@
     ViewData["Title"] = "Add New Patient";
 }
 
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+</head>
+
+<body>
 <div class="container mt-5">
-    <h2>@ViewData["Title"]</h2>
-    <form method="post">
-        <div class="row">
-            <div class="col-md-6">
-                <h4>Personal Information</h4>
-                <div class="form-group">
-                    <label for="FirstName">First Name:</label>
-                    <input asp-for="PatientDTO.PersonalInformation.FirstName" class="form-control" />
-                    <span asp-validation-for="PatientDTO.PersonalInformation.FirstName" class="text-danger"></span>
+        <h2><b>@ViewData["Title"]</b></h2>
+    <div class="mt-5">
+
+        <form method="post">
+            <div class="row">
+                    <div class="col-md-6">
+                    <h4>Personal Information</h4>
+                    <div class="form-group">
+                        <label for="FirstName">First Name:</label>
+                        <input asp-for="PatientDTO.PersonalInformation.FirstName" class="form-control"/>
+                        <span asp-validation-for="PatientDTO.PersonalInformation.FirstName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="LastName">Last Name:</label>
+                        <input asp-for="PatientDTO.PersonalInformation.LastName" class="form-control"/>
+                        <span asp-validation-for="PatientDTO.PersonalInformation.LastName" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="DateOfBirth">Date of Birth:</label>
+                        <input asp-for="PatientDTO.PersonalInformation.DateOfBirth" class="form-control"/>
+                        <span asp-validation-for="PatientDTO.PersonalInformation.DateOfBirth" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="Age">Age:</label>
+                        <input asp-for="PatientDTO.PersonalInformation.Age" class="form-control"/>
+                        <span asp-validation-for="PatientDTO.PersonalInformation.Age" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="Sex">Sex:</label>
+                        <input asp-for="PatientDTO.PersonalInformation.Sex" class="form-control"/>
+                        <span asp-validation-for="PatientDTO.PersonalInformation.Sex" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="Address">Address:</label>
+                        <input asp-for="PatientDTO.PersonalInformation.Address" class="form-control"/>
+                        <span asp-validation-for="PatientDTO.PersonalInformation.Address" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="CNP">CNP:</label>
+                        <input asp-for="PatientDTO.PersonalInformation.CNP" class="form-control"/>
+                        <span asp-validation-for="PatientDTO.PersonalInformation.CNP" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="PhoneNumber">Phone Number:</label>
+                        <input asp-for="PatientDTO.PersonalInformation.PhoneNumber" class="form-control"/>
+                        <span asp-validation-for="PatientDTO.PersonalInformation.PhoneNumber" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="Occupation">Occupation:</label>
+                        <input asp-for="PatientDTO.PersonalInformation.Occupation" class="form-control"/>
+                        <span asp-validation-for="PatientDTO.PersonalInformation.Occupation" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label for="Email">Email:</label>
+                        <input asp-for="PatientDTO.PersonalInformation.Email" class="form-control"/>
+                        <span asp-validation-for="PatientDTO.PersonalInformation.Email" class="text-danger"></span>
+                    </div>
+
                 </div>
-                <div class="form-group">
-                    <label for="LastName">Last Name:</label>
-                    <input asp-for="PatientDTO.PersonalInformation.LastName" class="form-control" />
-                    <span asp-validation-for="PatientDTO.PersonalInformation.LastName" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label for="DateOfBirth">Date of Birth:</label>
-                    <input asp-for="PatientDTO.PersonalInformation.DateOfBirth" class="form-control" />
-                    <span asp-validation-for="PatientDTO.PersonalInformation.DateOfBirth" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label for="Age">Age:</label>
-                    <input asp-for="PatientDTO.PersonalInformation.Age" class="form-control" />
-                    <span asp-validation-for="PatientDTO.PersonalInformation.Age" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label for="Sex">Sex:</label>
-                    <input asp-for="PatientDTO.PersonalInformation.Sex" class="form-control" />
-                    <span asp-validation-for="PatientDTO.PersonalInformation.Sex" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label for="Address">Address:</label>
-                    <input asp-for="PatientDTO.PersonalInformation.Address" class="form-control" />
-                    <span asp-validation-for="PatientDTO.PersonalInformation.Address" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label for="CNP">CNP:</label>
-                    <input asp-for="PatientDTO.PersonalInformation.CNP" class="form-control" />
-                    <span asp-validation-for="PatientDTO.PersonalInformation.CNP" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label for="PhoneNumber">Phone Number:</label>
-                    <input asp-for="PatientDTO.PersonalInformation.PhoneNumber" class="form-control" />
-                    <span asp-validation-for="PatientDTO.PersonalInformation.PhoneNumber" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label for="Occupation">Occupation:</label>
-                    <input asp-for="PatientDTO.PersonalInformation.Occupation" class="form-control" />
-                    <span asp-validation-for="PatientDTO.PersonalInformation.Occupation" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label for="Email">Email:</label>
-                    <input asp-for="PatientDTO.PersonalInformation.Email" class="form-control" />
-                    <span asp-validation-for="PatientDTO.PersonalInformation.Email" class="text-danger"></span>
+                <div class="col-md-6">
+                    <h4>Medical History</h4>
+                    <div class="form-group">
+                        <label for="MedicalConditions">Medical Conditions:</label>
+                        <textarea asp-for="PatientDTO.MedicalHistory.MedicalConditions" class="form-control" rows="3"></textarea>
+                        <span asp-validation-for="PatientDTO.MedicalHistory.MedicalConditions" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="Allergies">Allergies:</label>
+                        <textarea asp-for="PatientDTO.MedicalHistory.Allergies" class="form-control" rows="3"></textarea>
+                        <span asp-validation-for="PatientDTO.MedicalHistory.Allergies" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="SurgicalHistory">Surgical History:</label>
+                        <textarea asp-for="PatientDTO.MedicalHistory.SurgicalHistory" class="form-control" rows="3"></textarea>
+                        <span asp-validation-for="PatientDTO.MedicalHistory.SurgicalHistory" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ImmunizationHistory">Immunization History:</label>
+                        <textarea asp-for="PatientDTO.MedicalHistory.ImmunizationHistory" class="form-control" rows="3"></textarea>
+                        <span asp-validation-for="PatientDTO.MedicalHistory.ImmunizationHistory" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="FamilyMedicalHistory">Family Medical History:</label>
+                        <textarea asp-for="PatientDTO.MedicalHistory.FamilyMedicalHistory" class="form-control" rows="3"></textarea>
+                        <span asp-validation-for="PatientDTO.MedicalHistory.FamilyMedicalHistory" class="text-danger"></span>
+                    </div>
                 </div>
 
             </div>
-            <div class="col-md-6">
-                <h4>Medical History</h4>
-                <div class="form-group">
-                    <label for="MedicalConditions">Medical Conditions:</label>
-                    <input asp-for="PatientDTO.MedicalHistory.MedicalConditions" class="form-control" />
-                    <span asp-validation-for="PatientDTO.MedicalHistory.MedicalConditions" class="text-danger"></span>
-                </div>
 
-                <div class="form-group">
-                    <label for="Allergies">Allergies:</label>
-                    <input asp-for="PatientDTO.MedicalHistory.Allergies" class="form-control" />
-                    <span asp-validation-for="PatientDTO.MedicalHistory.Allergies" class="text-danger"></span>
-                </div>
-
-                <div class="form-group">
-                    <label for="SurgicalHistory">Surgical History:</label>
-                    <input asp-for="PatientDTO.MedicalHistory.SurgicalHistory" class="form-control" />
-                    <span asp-validation-for="PatientDTO.MedicalHistory.SurgicalHistory" class="text-danger"></span>
-                </div>
-
-                <div class="form-group">
-                    <label for="ImmunizationHistory">Immunization History:</label>
-                    <input asp-for="PatientDTO.MedicalHistory.ImmunizationHistory" class="form-control" />
-                    <span asp-validation-for="PatientDTO.MedicalHistory.ImmunizationHistory" class="text-danger"></span>
-                </div>
-
-                <div class="form-group">
-                    <label for="FamilyMedicalHistory">Family Medical History:</label>
-                    <input asp-for="PatientDTO.MedicalHistory.FamilyMedicalHistory" class="form-control" />
-                    <span asp-validation-for="PatientDTO.MedicalHistory.FamilyMedicalHistory" class="text-danger"></span>
-                </div>
-
-            </div>
-
-        </div>
-
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </form>
+            <button type="submit" class="btn btn-primary mt-5">Submit</button>
+        </form>
+    </div>
 </div>
+    </body>
+</html>

@@ -1,11 +1,20 @@
+/*global palette
+    #f2f7f3 - mint cream
+    9ac2c9 - light blue
+    627e93- slate gray
+    ffffff - white
+*/
+
+
+
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
@@ -13,10 +22,32 @@ html {
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    margin-bottom: 60px;
 }
+
+/*bg color*/
+.bg-color-mint-cream {
+    background-color: #f2f7f3;
+}
+
+.centered-table {
+    margin: auto;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-height: 80vh;
+    max-width: 70%;
+    padding: 20px;
+    border: 2px solid #ccc;
+    background-color: #fff;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+
+
