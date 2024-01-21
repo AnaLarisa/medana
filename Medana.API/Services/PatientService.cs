@@ -36,6 +36,18 @@ public class PatientService : IPatientService
 
     public bool AddPatient(Patient patient)
     {
+        if (!_patientRepository.IsCNPUnique(patient.PersonalInformation.CNP))
+        {
+            throw new Exception("The CNP provided already exists in the database.");
+        }
+
         return _patientRepository.AddPatient(patient);
     }
+
+    public bool DeletePatient(int patientId) 
+    {
+        return _patientRepository.DeletePatient(patientId);
+    }
+
+
 }

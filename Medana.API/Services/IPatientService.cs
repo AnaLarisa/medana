@@ -9,4 +9,6 @@ public interface IPatientService
     Patient GetPatientById(int id);
 
     bool AddPatient(Patient patient);
+
+    bool DeletePatient(int patientId);
 }

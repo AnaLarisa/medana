@@ -30,4 +30,30 @@ public class PatientRepository : IPatientRepository
         _dbContext.SaveChanges();
         return true;
     }
+
+    public bool IsCNPUnique(string CNP)
+    {
+        return _dbContext.Patients.Any(p => p.PersonalInformation.CNP == CNP);
+    }
+
+    public bool DeletePatient(int id) 
+    { 
+        var patient = _dbContext.Patients.FirstOrDefault(p => p.Id == id);
+        var personalInformation = _dbContext.PersonalInformation.FirstOrDefault(p => p.Id == patient.PersonalInformation.Id);
+        var medicalHistory = _dbContext.MedicalHistory.FirstOrDefault(m => m.Id == patient.MedicalHistory.Id);
+        
+        if (patient == null || personalInformation == null || medicalHistory == null)
+        {
+            return false;
+        }
+
+
+        _dbContext.Patients.Remove(patient);
+        _dbContext.PersonalInformation.Remove(personalInformation);
+        _dbContext.MedicalHistory.Remove(medicalHistory);
+        _dbContext.SaveChanges();
+        return true;
+    }
+
+
 }

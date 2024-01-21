@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Medana.API.Repositories;
+using System.ComponentModel.DataAnnotations;
 
 namespace Medana.API.Attributes;
 
@@ -6,31 +7,34 @@ namespace Medana.API.Attributes;
 [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter, AllowMultiple = false)]
 public class CNPAttribute : ValidationAttribute
 {
+    private IPatientRepository _patientRepository;
+
     protected override ValidationResult IsValid(object value, ValidationContext validationContext)
     {
-        if (value == null)
-        {
-            // If the CNP is optional and can be null, consider it valid
-            return ValidationResult.Success;
-        }
-
-        if (value is not string cnp)
+        if (value is not string cnp || 
+            cnp.Length != 13 || 
+            !long.TryParse(cnp, out _))
         {
             return new ValidationResult("Invalid CNP format.");
         }
 
-        // check length to be 13
-        if (cnp.Length != 13 || !long.TryParse(cnp, out _))
-        {
-            return new ValidationResult("Invalid CNP format.");
-        }
 
         // check birthdate
         int year = int.Parse(cnp.Substring(1, 2));
         int month = int.Parse(cnp.Substring(3, 2));
         int day = int.Parse(cnp.Substring(5, 2));
 
-        DateTime birthdate = new DateTime(year, month, day);
+        DateTime birthdate;
+        try 
+        {
+            birthdate = new DateTime(year, month, day);
+        }
+        catch (ArgumentOutOfRangeException)
+        {
+            return new ValidationResult("Invalid CNP - invalid birthdate segment.");
+        }
+
+
         if (birthdate > DateTime.Now || !IsValidDate(year, month, day))
         {
             return new ValidationResult("Invalid CNP - invalid birthdate segment.");

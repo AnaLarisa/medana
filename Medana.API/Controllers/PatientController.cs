@@ -47,4 +47,28 @@ public class PatientController : ControllerBase
         return _patientService.AddPatient(patient);
     }
 
+
+    [HttpDelete]
+    [Route("delete")]
+    public IActionResult DeletePatient(int id) 
+    {
+        try
+        {
+            var patientToBeDeleted = _patientService.GetPatientById(id);
+
+            if (patientToBeDeleted == null)
+            {
+                return NotFound($"Patient with Id = {id} not found");
+            }
+
+            return await _patientsService.DeletePatient(patientToBeDeleted);
+        }
+        catch (Exception)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError,
+                $"Deletion of patient with ID {id} failed.");
+        }
+
+    }
+
 }
