@@ -18,9 +18,14 @@ public class PatientService : IPatientService
     public IEnumerable<PatientDTO> GetAllPatientsWithDetails()
     {
         var patients = _patientRepository.GetAllPatients();
+        if (patients.Count < 1)
+        { 
+            throw new Exception("No patients found in the database.");
+        }
 
         var patientsWithDetails = patients.Select(patient => new PatientDTO
         {
+            CNP = patient.PersonalInformation.CNP,
             PersonalInformation = DTOHelper.MapToPersonalInformationDTO(patient.PersonalInformation),
             MedicalHistory = DTOHelper.MapToMedicalHistoryDTO(patient.MedicalHistory),
             InsuranceInformation = DTOHelper.MapToInsuranceInformationDTO(patient.InsuranceInformation)
@@ -29,14 +34,23 @@ public class PatientService : IPatientService
         return patientsWithDetails;
     }
 
-    public Patient GetPatientById(int id)
+    public PatientDTO GetPatientById(string cnp)
     {
-        return _patientRepository.GetPatientById(id);
+        var patient = _patientRepository.GetPatientById(cnp);
+        var patientWithDetails = new PatientDTO
+        {
+            CNP = patient.PersonalInformation.CNP,
+            PersonalInformation = DTOHelper.MapToPersonalInformationDTO(patient.PersonalInformation),
+            MedicalHistory = DTOHelper.MapToMedicalHistoryDTO(patient.MedicalHistory),
+            InsuranceInformation = DTOHelper.MapToInsuranceInformationDTO(patient.InsuranceInformation)
+        };
+
+        return patientWithDetails;
     }
 
     public bool AddPatient(Patient patient)
     {
-        if (!_patientRepository.IsCNPUnique(patient.PersonalInformation.CNP))
+        if (_patientRepository.IsCNPDuplicate(patient.PersonalInformation.CNP))
         {
             throw new Exception("The CNP provided already exists in the database.");
         }
@@ -44,10 +58,27 @@ public class PatientService : IPatientService
         return _patientRepository.AddPatient(patient);
     }
 
-    public bool DeletePatient(int patientId) 
+    public async Task<bool> DeletePatientAsync(string cnp) 
     {
-        return _patientRepository.DeletePatient(patientId);
+        var result = await _patientRepository.DeletePatientAsync(cnp);
+        return result;
     }
 
+    public bool UpdatePersonalInformation(PersonalInformationDTO personalInformationDTO)
+    {
+        var result = _patientRepository.UpdatePersonalInformation(personalInformationDTO);
+        return result;
+    }
 
+    public bool UpdateMedicalHistory(MedicalHistoryDTO medicalHistoryDTO, string cnp)
+    {
+        var result = _patientRepository.UpdateMedicalHistory(medicalHistoryDTO, cnp);
+        return result;
+    }
+
+    public bool UpdateInsuranceInformation(InsuranceInformationDTO insuranceInformationDTO, string cnp)
+    {
+        var result = _patientRepository.UpdateInsuranceInformation(insuranceInformationDTO, cnp);
+        return result;
+    }
 }

@@ -9,7 +9,7 @@ public class Medication
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
 
-    public string MedicationName;
-    public string Dosage;
-    public string Frequency;
+    public string MedicationName { get; set; }
+    public string Dosage { get; set; }
+    public string Frequency { get; set; }
 }

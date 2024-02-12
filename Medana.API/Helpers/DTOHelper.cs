@@ -8,12 +8,18 @@ public static class DTOHelper
 {
     public static Patient PatientDTOToPatient(PatientDTO patientDTO)
     {
-        return new Patient
+        var patient = new Patient
         {
+            CNP = patientDTO.CNP,
             PersonalInformation = PersonalInformationDTOToPersonalInformation(patientDTO.PersonalInformation),
-            MedicalHistory = MedicalHistoryDTOToMedicalHistory(patientDTO.MedicalHistory),
-            InsuranceInformation = InsuranceInformationDTOToInsuranceInformation(patientDTO.InsuranceInformation)
+            MedicalHistory = MedicalHistoryDTOToMedicalHistory(patientDTO.MedicalHistory, patientDTO.CNP),
+            InsuranceInformation = InsuranceInformationDTOToInsuranceInformation(patientDTO.InsuranceInformation, patientDTO.CNP)
         };
+
+        patient.PersonalInformation.Patient = patient;
+        patient.MedicalHistory.Patient = patient;
+        patient.InsuranceInformation.Patient = patient;
+        return patient;
     }
 
     public static PersonalInformation PersonalInformationDTOToPersonalInformation(PersonalInformationDTO personalInformationDTO)
@@ -32,12 +38,13 @@ public static class DTOHelper
         };
     }
 
-    public static MedicalHistory MedicalHistoryDTOToMedicalHistory(MedicalHistoryDTO medicalHistoryDTO)
+    public static MedicalHistory MedicalHistoryDTOToMedicalHistory(MedicalHistoryDTO medicalHistoryDTO, string cnp)
     {
         return new MedicalHistory
         {
+            CNP = cnp,
             MedicalConditions = medicalHistoryDTO.MedicalConditions,
-            Consultations = ConsultationDTOListToConsultations(medicalHistoryDTO.Consultations),
+            Consultations = ConsultationDTOListToConsultations(medicalHistoryDTO.Consultations, cnp),
             MedicationAndDosages = MedicationDTOListToMedications(medicalHistoryDTO.MedicationAndDosages),
             Allergies = medicalHistoryDTO.Allergies,
             SurgicalHistory = medicalHistoryDTO.SurgicalHistory,
@@ -46,10 +53,11 @@ public static class DTOHelper
         };
     }
 
-    public static Consultation ConsultationDTOToConsultation(ConsultationDTO consultationDTO)
+    public static Consultation ConsultationDTOToConsultation(ConsultationDTO consultationDTO, string cnp)
     {
         return new Consultation
         {
+            PatientCNP = cnp,
             ConsultationDate = consultationDTO.ConsultationDate,
             Symptoms = consultationDTO.Symptoms,
             Diagnosis = consultationDTO.Diagnosis,
@@ -63,13 +71,15 @@ public static class DTOHelper
         };
     }
 
-    public static List<Consultation> ConsultationDTOListToConsultations(List<ConsultationDTO> consultationDTOs)
+    public static IList<Consultation>? ConsultationDTOListToConsultations(IList<ConsultationDTO>? consultationDTOs, string cnp)
     {
-        return consultationDTOs?.ConvertAll(ConsultationDTOToConsultation);
+        if (consultationDTOs == null) return null;
+        return consultationDTOs.Select(dto => ConsultationDTOToConsultation(dto, cnp)).ToList();
     }
 
-    public static Medication MedicationDTOToMedication(MedicationDTO medicationDTO)
+    public static Medication? MedicationDTOToMedication(MedicationDTO medicationDTO)
     {
+        if (medicationDTO == null) return null;
         return new Medication
         {
             MedicationName = medicationDTO.MedicationName,
@@ -78,15 +88,18 @@ public static class DTOHelper
         };
     }
 
-    public static List<Medication> MedicationDTOListToMedications(List<MedicationDTO> medicationDTOs)
+    public static IList<Medication>? MedicationDTOListToMedications(IList<MedicationDTO> medicationDTOs)
     {
-        return medicationDTOs?.ConvertAll(MedicationDTOToMedication);
+        if (medicationDTOs == null) return null;
+        return medicationDTOs.Select(MedicationDTOToMedication).ToList();
     }
 
-    public static InsuranceInformation InsuranceInformationDTOToInsuranceInformation(InsuranceInformationDTO insuranceInformationDTO)
+    public static InsuranceInformation? InsuranceInformationDTOToInsuranceInformation(InsuranceInformationDTO insuranceInformationDTO, string cnp)
     {
+        if(insuranceInformationDTO == null) return null;
         return new InsuranceInformation
         {
+            CNP = cnp,
             InsuranceProvider = insuranceInformationDTO.InsuranceProvider,
             InsurancePolicyNumber = insuranceInformationDTO.InsurancePolicyNumber
         };
@@ -98,17 +111,17 @@ public static class DTOHelper
     public static PersonalInformationDTO MapToPersonalInformationDTO(PersonalInformation personalInformation)
     {
         return new PersonalInformationDTO 
-        { 
+        {
             FirstName = personalInformation.FirstName,
             LastName = personalInformation.LastName,
             DateOfBirth = personalInformation.DateOfBirth,
             Sex = personalInformation.Sex,
             Age = personalInformation.Age,
             Address = personalInformation.Address,
-            CNP = personalInformation.CNP,
             PhoneNumber = personalInformation.PhoneNumber,
             Occupation = personalInformation.Occupation,
-            Email = personalInformation.Email
+            Email = personalInformation.Email,
+            CNP = personalInformation.CNP
         };
        
     }
@@ -117,9 +130,9 @@ public static class DTOHelper
     {
         return new MedicalHistoryDTO 
         { 
-            MedicalConditions = medicalHistory.MedicalConditions,   
-            Consultations = medicalHistory.Consultations.ConvertAll(MapToConsultationDTO),
-            MedicationAndDosages = medicalHistory.MedicationAndDosages.ConvertAll(MapToMedicationDTO),
+            MedicalConditions = medicalHistory.MedicalConditions,
+            Consultations = medicalHistory.Consultations?.Select(MapToConsultationDTO)?.ToList(),
+            MedicationAndDosages = medicalHistory.MedicationAndDosages?.Select(MapToMedicationDTO)?.ToList(),
             Allergies = medicalHistory.Allergies,
             SurgicalHistory = medicalHistory.SurgicalHistory,
             ImmunizationHistory = medicalHistory.ImmunizationHistory,

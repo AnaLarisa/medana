@@ -7,11 +7,11 @@ namespace Medana.API.Entities.DTOs;
 public class MedicalHistoryDTO
 {
     [Required(ErrorMessage = "Medical conditions are required.")]
-    public List<string> MedicalConditions { get; set; }
-    public List<ConsultationDTO> Consultations { get; set; }
-    public List<MedicationDTO> MedicationAndDosages { get; set; }
-    public List<string> Allergies { get; set; }
-    public List<string> SurgicalHistory { get; set; }
-    public List<string> ImmunizationHistory { get; set; }
-    public string FamilyMedicalHistory { get; set; }
+    public IList<string>? MedicalConditions { get; set; }
+    public IList<ConsultationDTO> Consultations { get; set; }
+    public IList<MedicationDTO> MedicationAndDosages { get; set; }
+    public IList<string>? Allergies { get; set; }
+    public IList<string>? SurgicalHistory { get; set; }
+    public IList<string>? ImmunizationHistory { get; set; }
+    public string? FamilyMedicalHistory { get; set; }
 }

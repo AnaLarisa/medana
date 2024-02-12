@@ -7,8 +7,6 @@ namespace Medana.API.Attributes;
 [AttributeUsage(AttributeTargets.Property | AttributeTargets.Field | AttributeTargets.Parameter, AllowMultiple = false)]
 public class CNPAttribute : ValidationAttribute
 {
-    private IPatientRepository _patientRepository;
-
     protected override ValidationResult IsValid(object value, ValidationContext validationContext)
     {
         if (value is not string cnp || 
@@ -20,7 +18,7 @@ public class CNPAttribute : ValidationAttribute
 
 
         // check birthdate
-        int year = int.Parse(cnp.Substring(1, 2));
+        int year = int.Parse(cnp.Substring(1, 2)) == 0 ? 2000: 1900 + int.Parse(cnp.Substring(1, 2));
         int month = int.Parse(cnp.Substring(3, 2));
         int day = int.Parse(cnp.Substring(5, 2));
 

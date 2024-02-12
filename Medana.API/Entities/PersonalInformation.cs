@@ -7,7 +7,7 @@ namespace Medana.API.Entities;
 public class PersonalInformation
 {
     [Key]
-    [ForeignKey("Patient")]
+    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
 
     [Required(ErrorMessage = "First name is required.")]
@@ -45,7 +45,7 @@ public class PersonalInformation
 
     [Required]
     [CNP]
-    public string CNP { get; set; }
+    public string CNP { get; set; } //as foreign key
 
     [Phone]
     public string PhoneNumber { get; set; }
@@ -55,4 +55,7 @@ public class PersonalInformation
 
     [EmailAddress(ErrorMessage = "Invalid email address.")]
     public string Email { get; set; }
+
+    [NotMapped]
+    public Patient Patient { get; set; } = null!;
 }

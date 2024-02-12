@@ -1,18 +1,22 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using Medana.API.Attributes;
+using System.ComponentModel.DataAnnotations;
 
 namespace Medana.API.Entities;
 
 public class Patient
 {
     [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int Id { get; set; }
+    [Required]
+    [CNP]
+    [IsUnique(typeof(ApplicationDbContext))]
+    public string CNP { get; set; }
 
     [Required]
-    public virtual PersonalInformation PersonalInformation { get; set; }
+    public PersonalInformation PersonalInformation { get; set; } = new();
 
-    public virtual MedicalHistory MedicalHistory { get; set; }
-    
-    public InsuranceInformation InsuranceInformation { get; set; }
+    [Required]
+    public MedicalHistory MedicalHistory { get; set; } = new();
+
+    [Required]
+    public InsuranceInformation InsuranceInformation { get; set; } = new();
 }

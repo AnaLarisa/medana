@@ -31,7 +31,7 @@
       "launchBrowser": true,
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development",
-        "MedanaApiUrl": "http://localhost:5047"
+        "MedanaApiUrl": "https://localhost:44355"
       }
     }
   }

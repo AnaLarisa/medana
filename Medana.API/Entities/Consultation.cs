@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Medana.API.Attributes;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Medana.API.Entities;
@@ -26,4 +27,8 @@ public class Consultation
     public int HeartRate { get; set; }
     public int RespiratoryRate { get; set; }
     public double Temperature { get; set; }
+
+    [Required]
+    [CNP]
+    public string PatientCNP { get; set; }
 }

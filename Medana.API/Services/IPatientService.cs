@@ -6,9 +6,14 @@ namespace Medana.API.Services;
 public interface IPatientService
 {
     IEnumerable<PatientDTO> GetAllPatientsWithDetails();
-    Patient GetPatientById(int id);
+    PatientDTO GetPatientById(string cnp);
 
     bool AddPatient(Patient patient);
 
-    bool DeletePatient(int patientId);
+    Task<bool> DeletePatientAsync(string cnp);
+
+    public bool UpdatePersonalInformation(PersonalInformationDTO personalInformationDTO);
+    public bool UpdateMedicalHistory(MedicalHistoryDTO medicalHistoryDTO, string cnp);
+    public bool UpdateInsuranceInformation(InsuranceInformationDTO insuranceInformationDTO, string cnp);
+
 }

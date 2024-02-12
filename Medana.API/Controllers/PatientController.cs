@@ -3,6 +3,8 @@ using Medana.API.Entities.DTOs;
 using Medana.API.Helpers;
 using Medana.API.Services;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Medana.API.Controllers;
 
@@ -21,54 +23,156 @@ public class PatientController : ControllerBase
 
     [HttpGet]
     [Route("all")]
-    public IEnumerable<PatientDTO> GetAllPatients()
+    public IActionResult GetAllPatients()
     {
-        return _patientService.GetAllPatientsWithDetails();
+        try 
+        {
+            var patients = _patientService.GetAllPatientsWithDetails();
+            return Ok(patients);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "An error occurred while trying to retrieve all patients.");
+            return NotFound(ex.Message);
+        }
+
     }
 
     [HttpGet]
-    [Route("{id}")]
-    public Patient GetPatientById(int id)
+    [Route("{cnp}")]
+    public IActionResult GetPatientById(string cnp)
     {
-        return _patientService.GetPatientById(id);
+        try
+        {
+            var patient = _patientService.GetPatientById(cnp);
+
+            return Ok(patient);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, $"An error occurred while trying to retrieve patient with CNP {cnp}.");
+            return NotFound(ex.Message);
+        }
     }
 
     [HttpPost]
     [Route("add")]
-    public bool AddPatient(PatientDTO patientDto)
+    public IActionResult AddPatient(PatientDTO patientDto)
     {
-        if (!ModelState.IsValid)
+        try
         {
-            return false;
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var patient = DTOHelper.PatientDTOToPatient(patientDto);
+
+            if (_patientService.AddPatient(patient))
+            {
+                return Ok($"The patient with CNP {patient.CNP} has been successfully added to the database."); // Assuming success
+            }
+            else
+            {
+                return BadRequest("Failed to add patient.");
+            }
         }
-
-        var patient = DTOHelper.PatientDTOToPatient(patientDto);
-
-        return _patientService.AddPatient(patient);
+        catch (Exception ex)
+        {
+            Console.WriteLine($"An error occurred while adding the patient: {ex.Message}");
+            return StatusCode(500, $"An error occurred while processing your request:{ex.Message}");
+        }
     }
 
 
     [HttpDelete]
-    [Route("delete")]
-    public IActionResult DeletePatient(int id) 
+    [Route("delete/{cnp}")]
+    public async Task<IActionResult> DeletePatientAsync(string cnp) 
+    {
+        var result = await _patientService.DeletePatientAsync(cnp);
+        return result 
+            ? Ok($"Patient with CNP {cnp} has been successfully deleted from the database.") 
+            : StatusCode(StatusCodes.Status500InternalServerError, $"Deletion of patient with CNP {cnp} failed");
+
+    }
+
+
+    [HttpPatch]
+    [Route("edit/personalInformation/{cnp}")]
+    public IActionResult UpdatePersonalInformation(string cnp, PersonalInformationDTO personalInformationDTO)
     {
         try
         {
-            var patientToBeDeleted = _patientService.GetPatientById(id);
-
-            if (patientToBeDeleted == null)
+            if (!ModelState.IsValid)
             {
-                return NotFound($"Patient with Id = {id} not found");
+                return BadRequest(ModelState);
             }
 
-            return await _patientsService.DeletePatient(patientToBeDeleted);
-        }
-        catch (Exception)
-        {
-            return StatusCode(StatusCodes.Status500InternalServerError,
-                $"Deletion of patient with ID {id} failed.");
-        }
+            if (!_patientService.UpdatePersonalInformation(personalInformationDTO))
+            {
+                return NotFound();
+            }
 
+            return Ok($"Person with CNP {cnp} has been updated.");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"An error occurred while updating personal information: {ex.Message}");
+            return StatusCode(500, $"An error occurred while processing your request: {ex.Message}");
+        }
     }
+
+
+    [HttpPatch]
+    [Route("edit/medicalHistory/{cnp}")]
+    public IActionResult UpdateMedicalHistory(string cnp, MedicalHistoryDTO medicalHistoryDTO)
+    {
+        try
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (!_patientService.UpdateMedicalHistory(medicalHistoryDTO, cnp))
+            {
+                return NotFound();
+            }
+
+            return Ok($"Person with CNP {cnp} has been updated.");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"An error occurred while updating medical history: {ex.Message}");
+            return StatusCode(500, $"An error occurred while processing your request: :{ex.Message}");
+        }
+    }
+
+    [HttpPatch]
+    [Route("edit/insuranceInformation/{cnp}")]
+    public IActionResult UpdateInsuranceInformation(string cnp, InsuranceInformationDTO insuranceInformationDTO)
+    {
+        try
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            if (!_patientService.UpdateInsuranceInformation(insuranceInformationDTO, cnp))
+            {
+                return NotFound();
+            }
+
+            return Ok($"Person with CNP {cnp} has been updated.");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"An error occurred while updating insurance information: {ex.Message}");
+            return StatusCode(500, $"An error occurred while processing your request: {ex.Message}");
+        }
+    }
+
+
 
 }

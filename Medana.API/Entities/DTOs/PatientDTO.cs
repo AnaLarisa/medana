@@ -7,7 +7,11 @@ namespace Medana.API.Entities.DTOs;
 public class PatientDTO
 {
     [Required]
+    public string CNP { get; set; }
+
+    [Required]
     public PersonalInformationDTO PersonalInformation { get; set; }
-    public MedicalHistoryDTO MedicalHistory { get; set; }
-    public InsuranceInformationDTO InsuranceInformation { get; set; }
+
+    public MedicalHistoryDTO MedicalHistory { get; set; } = new();
+    public InsuranceInformationDTO InsuranceInformation { get; set; } = new();
 }
