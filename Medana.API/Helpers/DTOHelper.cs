@@ -116,7 +116,6 @@ public static class DTOHelper
             LastName = personalInformation.LastName,
             DateOfBirth = personalInformation.DateOfBirth,
             Sex = personalInformation.Sex,
-            Age = personalInformation.Age,
             Address = personalInformation.Address,
             PhoneNumber = personalInformation.PhoneNumber,
             Occupation = personalInformation.Occupation,

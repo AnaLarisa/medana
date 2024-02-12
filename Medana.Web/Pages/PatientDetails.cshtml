@@ -1,0 +1,97 @@
+﻿@page "{id}"
+@using Medana.API.Entities.DTOs
+@model Medana.Web.Pages.PatientDetailsModel
+
+@{
+    ViewData["Title"] = "Patient Details";
+PatientDTO patient = Model.Patient;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2><b>@ViewData["Title"]</b></h2>
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">Personal Information</h4>
+                <div class="row">
+                    <div class="col-md-6">
+                        <p><strong>First Name:</strong> @patient.PersonalInformation.FirstName</p>
+                        <p><strong>Last Name:</strong> @patient.PersonalInformation.LastName</p>
+                        <p><strong>Date of Birth:</strong> @patient.PersonalInformation.DateOfBirth.ToShortDateString()</p>
+                        <p><strong>Sex:</strong> @patient.PersonalInformation.Sex</p>
+                        <p><strong>Address:</strong> @patient.PersonalInformation.Address</p>
+                    </div>
+                    <div class="col-md-6">
+                        <p><strong>CNP:</strong> @patient.PersonalInformation.CNP</p>
+                        <p><strong>Phone Number:</strong> @patient.PersonalInformation.PhoneNumber</p>
+                        <p><strong>Occupation:</strong> @patient.PersonalInformation.Occupation</p>
+                        <p><strong>Email:</strong> @patient.PersonalInformation.Email</p>
+                    </div>
+                </div>
+                <hr>
+                <h4 class="card-title">Medical History</h4>
+                <div class="form-group">
+                    <label for="MedicalConditions">Medical Conditions:</label>
+                    <ul>
+                        @foreach (var condition in patient.MedicalHistory.MedicalConditions)
+                    {
+                        <li>@condition</li>
+                    }
+                    </ul>
+                </div>
+
+                <div class="form-group">
+                    <label for="Allergies">Allergies:</label>
+                    <ul>
+                        @foreach (var allergy in patient.MedicalHistory.Allergies)
+                    {
+                        <li>@allergy</li>
+                    }
+                    </ul>
+                </div>
+
+                <div class="form-group">
+                    <label for="SurgicalHistory">Surgical History:</label>
+                    <ul>
+                        @foreach (var surgery in patient.MedicalHistory.SurgicalHistory)
+                    {
+                        <li>@surgery</li>
+                    }
+                    </ul>
+                </div>
+
+                <div class="form-group">
+                    <label for="ImmunizationHistory">Immunization History:</label>
+                    <ul>
+                        @foreach (var immunization in patient.MedicalHistory.ImmunizationHistory)
+                    {
+                        <li>@immunization</li>
+                    }
+                    </ul>
+                </div>
+                <p>Family Medical History: @patient.MedicalHistory.FamilyMedicalHistory</p>
+                <hr>
+                <h4 class="card-title">Insurance Information</h4>
+                <p><strong>Insurance Provider:</strong> @patient.InsuranceInformation.InsuranceProvider</p>
+                <p><strong>Insurance Policy Number:</strong>@patient.InsuranceInformation.InsurancePolicyNumber</p>
+            </div>
+        </div>
+            <form method="post" class="mt-2">
+                <button type="submit" name="deleteButton" value="delete" class="btn btn-danger">Delete</button>
+            </form>
+
+            <form method="post" asp-page-handler="DownloadReport" class="mt-2">
+                <button type="submit" class="btn btn-primary">Download Report</button>
+            </form>
+        
+    </div>
+</body>
+</html>

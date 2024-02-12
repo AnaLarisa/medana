@@ -47,9 +47,17 @@ public class PatientRepository : IPatientRepository
 
     public bool AddPatient(Patient patient)
     {
-        _dbContext.Patients.Add(patient);
-        _dbContext.SaveChanges();
-        return true;
+        try 
+        {
+            _dbContext.Patients.Add(patient);
+            _dbContext.SaveChanges();
+            return true;
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"An error occurred while adding the patient: {ex.Message}");
+            throw;
+        }
     }
 
     public bool IsCNPDuplicate(string CNP)

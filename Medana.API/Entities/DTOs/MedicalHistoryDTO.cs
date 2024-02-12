@@ -8,8 +8,8 @@ public class MedicalHistoryDTO
 {
     [Required(ErrorMessage = "Medical conditions are required.")]
     public IList<string>? MedicalConditions { get; set; }
-    public IList<ConsultationDTO> Consultations { get; set; }
-    public IList<MedicationDTO> MedicationAndDosages { get; set; }
+    public IList<ConsultationDTO> Consultations { get; set; } = new List<ConsultationDTO>();
+    public IList<MedicationDTO> MedicationAndDosages { get; set; } = new List<MedicationDTO>();
     public IList<string>? Allergies { get; set; }
     public IList<string>? SurgicalHistory { get; set; }
     public IList<string>? ImmunizationHistory { get; set; }

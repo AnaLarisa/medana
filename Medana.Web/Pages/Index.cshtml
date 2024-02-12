@@ -1,4 +1,4 @@
-﻿@page
+﻿@page "/"
 @model IndexModel
 @{
     ViewData["Title"] = "Medana";
@@ -32,9 +32,9 @@ var patients = Model.Patients;
                 </thead>
                 <tbody class="table-hover">
                 @foreach (var patient in patients)
-                {
-                    <tr>
-                        <td>@patient.CNP</td>
+            {
+                <tr>
+                        <td><a asp-page="/PatientDetails" asp-route-id="@patient.CNP">@patient.CNP</a></td>
                         <td>@patient.PersonalInformation.FirstName</td>
                         <td>@patient.PersonalInformation.LastName</td>
                         <td>@patient.PersonalInformation.DateOfBirth.ToString("yyyy-MM-dd")</td>
@@ -42,7 +42,7 @@ var patients = Model.Patients;
                         <td>@patient.PersonalInformation.Address</td>
                         <td>@patient.PersonalInformation.PhoneNumber</td>
                     </tr>
-                }
+            }
                 </tbody>
             </table>
         </div>

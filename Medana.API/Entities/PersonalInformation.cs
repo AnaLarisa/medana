@@ -23,9 +23,11 @@ public class PersonalInformation
     [Required(ErrorMessage = "Sex is required.")]
     public string Sex { get; set; }
 
+    private int _age;
     public int Age
     {
-        get
+        get { return _age; }
+        private set
         {
             DateTime currentDate = DateTime.Now;
             int age = currentDate.Year - DateOfBirth.Year;
@@ -35,9 +37,8 @@ public class PersonalInformation
                 age--;
             }
 
-            return age;
+            _age = age;
         }
-        private set { }
     }
 
     [Required]

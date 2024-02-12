@@ -3,6 +3,7 @@ using Medana.API.Entities.DTOs;
 using Medana.API.Helpers;
 using Medana.API.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 

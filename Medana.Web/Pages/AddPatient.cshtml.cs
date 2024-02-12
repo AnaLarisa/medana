@@ -1,43 +1,42 @@
+using System.Threading.Tasks;
 using Medana.API.Entities.DTOs;
-using Medana.API.Helpers;
-using Medana.API.Services;
 using Medana.Web.Client;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace Medana.Web.Pages
+namespace Medana.Web.Pages;
+
+public class AddPatientModel : PageModel
 {
-    public class AddPatientModel : PageModel
+    private readonly IClient _client;
+
+    [BindProperty]
+    public PatientDTO PatientDTO { get; set; }
+
+    public string ErrorMessage { get; set; } = string.Empty;
+
+    public AddPatientModel(IClient client)
     {
-        private readonly IClient _client;
+        _client = client;
+    }
 
-        [BindProperty]
-        public PatientDTO PatientDTO { get; set; }
+    public IActionResult OnGet()
+    {
+        return Page();
+    }
 
-        public AddPatientModel(IClient client)
-        {
-            _client = client;
+    public async Task<IActionResult> OnPostAsync()
+    {
+        PatientDTO.CNP = PatientDTO.PersonalInformation.CNP;
+        try 
+        { 
+            var patient = await _client.AddPatientAsync(PatientDTO);
+            return RedirectToPage("Index");
         }
-
-        public IActionResult OnGet()
+        catch (Exception ex)
         {
-            return Page();
-        }
-
-        public async Task<IActionResult> OnPost()
-        {
-            if (!ModelState.IsValid)
-            {
-                return Page();
-            }
-
-            if (await _client.AddPatientAsync(PatientDTO))
-            {
-                return RedirectToPage("SuccessPage");
-            }
-
+            ErrorMessage = ex.Message;
             return Page();
         }
     }
 }
-
