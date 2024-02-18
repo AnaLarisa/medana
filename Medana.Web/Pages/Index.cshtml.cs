@@ -19,10 +19,10 @@ public class IndexModel : PageModel
 
     public async Task OnGetAsync()
     {
-        Patients = await GetDummyPatientsAsync();
+        Patients = await GetAllPatients();
     }
 
-    public async Task<List<PatientDTO>> GetDummyPatientsAsync()
+    public async Task<List<PatientDTO>> GetAllPatients()
     {
         var patients  = await _client.GetAllPatientsAsync();
         return patients.ToList();

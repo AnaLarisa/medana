@@ -25,12 +25,13 @@ PatientDTO patient = Model.Patient;
                     <div class="col-md-6">
                         <p><strong>First Name:</strong> @patient.PersonalInformation.FirstName</p>
                         <p><strong>Last Name:</strong> @patient.PersonalInformation.LastName</p>
-                        <p><strong>Date of Birth:</strong> @patient.PersonalInformation.DateOfBirth.ToShortDateString()</p>
-                        <p><strong>Sex:</strong> @patient.PersonalInformation.Sex</p>
-                        <p><strong>Address:</strong> @patient.PersonalInformation.Address</p>
+                        <p><strong>Birth date:</strong> @patient.PersonalInformation.DateOfBirth.ToShortDateString()</p>
+                        <p><strong>Age:</strong> @patient.PersonalInformation.Age</p>
+                        <p><strong>Sex:</strong> @patient.PersonalInformation.Sex</>
                     </div>
                     <div class="col-md-6">
                         <p><strong>CNP:</strong> @patient.PersonalInformation.CNP</p>
+                        <p><strong>Address:</strong> @patient.PersonalInformation.Address</p>
                         <p><strong>Phone Number:</strong> @patient.PersonalInformation.PhoneNumber</p>
                         <p><strong>Occupation:</strong> @patient.PersonalInformation.Occupation</p>
                         <p><strong>Email:</strong> @patient.PersonalInformation.Email</p>

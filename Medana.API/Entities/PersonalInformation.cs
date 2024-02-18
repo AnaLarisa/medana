@@ -23,24 +23,6 @@ public class PersonalInformation
     [Required(ErrorMessage = "Sex is required.")]
     public string Sex { get; set; }
 
-    private int _age;
-    public int Age
-    {
-        get { return _age; }
-        private set
-        {
-            DateTime currentDate = DateTime.Now;
-            int age = currentDate.Year - DateOfBirth.Year;
-
-            if (DateOfBirth.Date > currentDate.AddYears(-age))
-            {
-                age--;
-            }
-
-            _age = age;
-        }
-    }
-
     [Required]
     public string Address { get; set; }
 

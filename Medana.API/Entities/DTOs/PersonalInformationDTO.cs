@@ -2,6 +2,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace Medana.API.Entities.DTOs;
 
@@ -17,6 +18,7 @@ public class PersonalInformationDTO
     [Required(ErrorMessage = "Date of birth is required.")]
     [DataType(DataType.Date)]
     public DateTime DateOfBirth { get; set; }
+    public int Age { get; set; }
 
     [Required(ErrorMessage = "Sex is required.")]
     public string Sex { get; set; }

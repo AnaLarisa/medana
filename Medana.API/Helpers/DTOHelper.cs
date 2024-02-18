@@ -38,6 +38,18 @@ public static class DTOHelper
         };
     }
 
+    private static int setAge(DateTime birthDate)
+    {
+        DateTime currentDate = DateTime.Now;
+        int age = currentDate.Year - birthDate.Year;
+
+        if (birthDate.Date > currentDate.AddYears(-age))
+        {
+            age--;
+        }
+        return age;
+    }
+
     public static MedicalHistory MedicalHistoryDTOToMedicalHistory(MedicalHistoryDTO medicalHistoryDTO, string cnp)
     {
         return new MedicalHistory
@@ -115,6 +127,7 @@ public static class DTOHelper
             FirstName = personalInformation.FirstName,
             LastName = personalInformation.LastName,
             DateOfBirth = personalInformation.DateOfBirth,
+            Age = setAge(personalInformation.DateOfBirth),
             Sex = personalInformation.Sex,
             Address = personalInformation.Address,
             PhoneNumber = personalInformation.PhoneNumber,

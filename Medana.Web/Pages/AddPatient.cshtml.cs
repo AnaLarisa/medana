@@ -31,7 +31,7 @@ public class AddPatientModel : PageModel
         try 
         { 
             var patient = await _client.AddPatientAsync(PatientDTO);
-            return RedirectToPage("Index");
+            return RedirectToPage("/Index");
         }
         catch (Exception ex)
         {

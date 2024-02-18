@@ -1,11 +1,7 @@
-using Medana.API.Entities;
 using Medana.API.Entities.DTOs;
 using Medana.API.Helpers;
 using Medana.API.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace Medana.API.Controllers;
 
@@ -60,6 +56,7 @@ public class PatientController : ControllerBase
     [Route("add")]
     public IActionResult AddPatient(PatientDTO patientDto)
     {
+        return BadRequest("Failed to add patient.");
         try
         {
             if (!ModelState.IsValid)

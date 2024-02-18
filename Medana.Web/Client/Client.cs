@@ -60,7 +60,15 @@ public class Client : IClient
             return JsonSerializer.Deserialize<bool>(result, _jsonSerializerOptions);
         }
 
+        var statusCode = response.StatusCode;
         var errorMessage = await response.Content.ReadAsStringAsync();
+
+        var errorJson = JsonSerializer.Deserialize<JsonElement>(errorMessage);
+        if (errorJson.TryGetProperty("errors", out var errors))
+        {
+            throw new Exception($"The request failed with status {statusCode}. \nThe following errors have occurred: \n{errors}");
+        }
+
         throw new Exception(errorMessage);
     }
 
