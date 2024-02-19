@@ -56,7 +56,6 @@ public class PatientController : ControllerBase
     [Route("add")]
     public IActionResult AddPatient(PatientDTO patientDto)
     {
-        return BadRequest("Failed to add patient.");
         try
         {
             if (!ModelState.IsValid)

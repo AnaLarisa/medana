@@ -15,9 +15,8 @@ public class PersonalInformationDTO
     [Required(ErrorMessage = "Last name is required.")]
     public string LastName { get; set; }
 
-    [Required(ErrorMessage = "Date of birth is required.")]
     [DataType(DataType.Date)]
-    public DateTime DateOfBirth { get; set; }
+    public DateTime DateOfBirth { get; set; } = new();
     public int Age { get; set; }
 
     [Required(ErrorMessage = "Sex is required.")]

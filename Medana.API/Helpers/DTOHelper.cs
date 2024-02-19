@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Medana.API.Entities;
 using Medana.API.Entities.DTOs;
 
@@ -28,7 +29,7 @@ public static class DTOHelper
         {
             FirstName = personalInformationDTO.FirstName,
             LastName = personalInformationDTO.LastName,
-            DateOfBirth = personalInformationDTO.DateOfBirth,
+            DateOfBirth = GetBirthDateFromCNP(personalInformationDTO.CNP),
             Sex = personalInformationDTO.Sex,
             Address = personalInformationDTO.Address,
             CNP = personalInformationDTO.CNP,
@@ -186,6 +187,23 @@ public static class DTOHelper
             Dosage = medication.Dosage,
             Frequency = medication.Frequency
         };
+    }
+
+    private static DateTime GetBirthDateFromCNP(string cnp)
+    {
+        string datePart = cnp.Substring(1, 6);
+        string yearPart = datePart.Substring(0, 2);
+        string monthPart = datePart.Substring(2, 2);
+        string dayPart = datePart.Substring(4, 2);
+
+        int year = int.Parse(yearPart);
+        int month = int.Parse(monthPart);
+        int day = int.Parse(dayPart);
+
+        int century = (year < 22) ? 2000 : 1900;
+
+        DateTime birthDate = new DateTime(century + year, month, day);
+        return birthDate;
     }
 
 }

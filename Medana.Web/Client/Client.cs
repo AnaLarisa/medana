@@ -1,11 +1,6 @@
-﻿using Medana.API.Entities;
-using Medana.API.Entities.DTOs;
-using System;
-using System.Collections.Generic;
-using System.Net.Http;
+﻿using Medana.API.Entities.DTOs;
 using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace Medana.Web.Client;
 

@@ -1,5 +1,4 @@
 using Medana.Web.Client;
-using Medana.Web.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +13,6 @@ if (medanaApiUrl != null)
         BaseAddress = new Uri(medanaApiUrl)
     };
     builder.Services.AddScoped<IClient>(_ => new Client(globalHttpClient));
-    builder.Services.AddScoped<IPatientReportService,PatientReportService>();
 }
 else
 {

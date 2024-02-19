@@ -1,22 +1,20 @@
-using Medana.API.Entities;
-using Medana.API.Entities.DTOs;
+﻿using Medana.API.Entities.DTOs;
 using Medana.Web.Client;
-using Medana.Web.Services;
+using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using PuppeteerSharp;
 
 namespace Medana.Web.Pages;
 
 public class PatientDetailsModel : PageModel
 {
     private readonly IClient _client;
-    private readonly IPatientReportService _reportService;
     public PatientDTO Patient { get; set; }
 
-    public PatientDetailsModel(IClient client, IPatientReportService reportService)
+    public PatientDetailsModel(IClient client)
     {
         _client = client;
-        _reportService = reportService;
     }
 
     public async Task<IActionResult> OnGetAsync(string id)
@@ -53,12 +51,34 @@ public class PatientDetailsModel : PageModel
 
     public async Task<IActionResult> OnPostDownloadReport()
     {
-        var url = Request.Path.Value;
-        var CNP = url.Split("/").Last();
-        PatientDTO patient = await _client.GetPatientByIdAsync(CNP);
+        var url = Request.GetEncodedUrl();
 
-        byte[] reportData = _reportService.GeneratePatientReport(patient);
+        using var browserFetcher = new BrowserFetcher();
+        await browserFetcher.DownloadAsync();
 
-        return File(reportData, "application/pdf", "PatientReport.pdf");
+        var browser = await Puppeteer.LaunchAsync(new LaunchOptions
+        {
+            Headless = true
+        });
+
+        var page = await browser.NewPageAsync();
+        await page.GoToAsync(url);
+
+        // Execută JavaScript pentru a ascunde butoanele
+        await page.EvaluateExpressionAsync(@"
+        document.querySelectorAll('button').forEach(function(button) {
+            button.style.display = 'none';
+        });
+    ");
+
+        var fileName = "medical_record.pdf";
+        var outputPath = Path.Combine(Path.GetTempPath(), fileName);
+
+        await page.PdfAsync(outputPath);
+
+        var fileBytes = await System.IO.File.ReadAllBytesAsync(outputPath);
+        System.IO.File.Delete(outputPath);
+
+        return File(fileBytes, "application/pdf", fileName);
     }
 }
