@@ -79,53 +79,55 @@ PatientDTO patient = Model.Patient;
                     </ul>
                 </div>
                 <p>Family Medical History: @patient.MedicalHistory.FamilyMedicalHistory</p>
+                
                 <hr>
                 <h4 class="card-title">Insurance Information</h4>
                 <p><strong>Insurance Provider:</strong> @patient.InsuranceInformation.InsuranceProvider</p>
                 <p><strong>Insurance Policy Number:</strong>@patient.InsuranceInformation.InsurancePolicyNumber</p>
-            </div>
 
-            <h4 class="card-title">Consultations</h4>
-            @if (patient.MedicalHistory.Consultations != null && patient.MedicalHistory.Consultations.Any())
-            {
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Consultation Date</th>
-                            <th>Symptoms</th>
-                            <th>Diagnosis</th>
-                            <th>Treatment Plan</th>
-                            <th>Notes</th>
-                            <th>Prescriptions</th>
-                            <th>Blood Pressure</th>
-                            <th>Heart Rate</th>
-                            <th>Respiratory Rate</th>
-                            <th>Temperature</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var consultation in patient.MedicalHistory.Consultations)
-                        {
+                <hr>
+                <h4 class="card-title">Consultations</h4>
+                @if (patient.MedicalHistory.Consultations != null && patient.MedicalHistory.Consultations.Any())
+                {
+                    <table class="table">
+                        <thead>
                             <tr>
-                                <td>@consultation.ConsultationDate.ToShortDateString()</td>
-                                <td>@consultation.Symptoms</td>
-                                <td>@consultation.Diagnosis</td>
-                                <td>@consultation.TreatmentPlan</td>
-                                <td>@consultation.Notes</td>
-                                <td>@consultation.Prescriptions</td>
-                                <td>@consultation.BloodPressure</td>
-                                <td>@consultation.HeartRate</td>
-                                <td>@consultation.RespiratoryRate</td>
-                                <td>@consultation.Temperature</td>
+                                <th>Consultation Date</th>
+                                <th>Symptoms</th>
+                                <th>Diagnosis</th>
+                                <th>Treatment Plan</th>
+                                <th>Notes</th>
+                                <th>Prescriptions</th>
+                                <th>Blood Pressure</th>
+                                <th>Heart Rate</th>
+                                <th>Respiratory Rate</th>
+                                <th>Temperature</th>
                             </tr>
-                        }
-                    </tbody>
-                </table>
-            }
-            else
-            {
-                <p>No consultations found.</p>
-            }
+                        </thead>
+                        <tbody>
+                            @foreach (var consultation in patient.MedicalHistory.Consultations)
+                            {
+                                <tr>
+                                    <td>@consultation.ConsultationDate.ToShortDateString()</td>
+                                    <td>@consultation.Symptoms</td>
+                                    <td>@consultation.Diagnosis</td>
+                                    <td>@consultation.TreatmentPlan</td>
+                                    <td>@consultation.Notes</td>
+                                    <td>@consultation.Prescriptions</td>
+                                    <td>@consultation.BloodPressure</td>
+                                    <td>@consultation.HeartRate</td>
+                                    <td>@consultation.RespiratoryRate</td>
+                                    <td>@consultation.Temperature</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+                else
+                {
+                    <p>No consultations found.</p>
+                }
+            </div>
 
         </div>
             <form method="post" class="mt-2">
