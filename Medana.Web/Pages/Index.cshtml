@@ -15,11 +15,18 @@ var patients = Model.Patients;
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 </head>
 <body>
-
     <div class="container mt-5">
         <h2><b>Patients List</b></h2>
-            <table class="table table-bordered table-hover table-responsive-xl centered-table" border="1">
-                <thead class="table-light">
+
+        <div class="input-group mb-4">
+            <input type="text" class="form-control" placeholder="Search CNP..." id="searchInput">
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="button" onclick="searchCNP()">Search</button>
+            </div>
+        </div>
+
+        <table class="table table-bordered table-hover table-responsive-xl centered-table mt-5" border="1">
+            <thead class="table-light">
                 <tr>
                     <th>CNP</th>
                     <th>First Name</th>
@@ -29,11 +36,12 @@ var patients = Model.Patients;
                     <th>Address</th>
                     <th>Phone Number</th>
                 </tr>
-                </thead>
-                <tbody class="table-hover">
+            </thead>
+            <tbody class="table-hover">
+                <!-- Loop through patients and generate rows -->
                 @foreach (var patient in patients)
-            {
-                <tr>
+                {
+                    <tr>
                         <td><a asp-page="/PatientDetails" asp-route-id="@patient.CNP">@patient.CNP</a></td>
                         <td>@patient.PersonalInformation.FirstName</td>
                         <td>@patient.PersonalInformation.LastName</td>
@@ -42,13 +50,32 @@ var patients = Model.Patients;
                         <td>@patient.PersonalInformation.Address</td>
                         <td>@patient.PersonalInformation.PhoneNumber</td>
                     </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        function searchCNP() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("searchInput");
+            filter = input.value.toUpperCase();
+            table = document.querySelector(".table");
+            tr = table.getElementsByTagName("tr");
+
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[0];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
             }
-                </tbody>
-            </table>
-        </div>
-
-    
-
+        }
+    </script>
 </body>
 </html>
 
