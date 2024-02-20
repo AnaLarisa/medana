@@ -81,4 +81,10 @@ public class PatientService : IPatientService
         var result = _patientRepository.UpdateInsuranceInformation(insuranceInformationDTO, cnp);
         return result;
     }
+
+    public bool AddConsultation(Consultation consultation)
+    {
+        var result = _patientRepository.AddConsultation(consultation);
+        return result;
+    }
 }

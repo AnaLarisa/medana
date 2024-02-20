@@ -15,5 +15,5 @@ public interface IPatientService
     public bool UpdatePersonalInformation(PersonalInformationDTO personalInformationDTO);
     public bool UpdateMedicalHistory(MedicalHistoryDTO medicalHistoryDTO, string cnp);
     public bool UpdateInsuranceInformation(InsuranceInformationDTO insuranceInformationDTO, string cnp);
-
+    bool AddConsultation(Consultation consultation);
 }

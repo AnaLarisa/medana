@@ -32,7 +32,6 @@ public class PatientController : ControllerBase
             _logger.LogError(ex, "An error occurred while trying to retrieve all patients.");
             return NotFound(ex.Message);
         }
-
     }
 
     [HttpGet]
@@ -78,6 +77,36 @@ public class PatientController : ControllerBase
         {
             Console.WriteLine($"An error occurred while adding the patient: {ex.Message}");
             return StatusCode(500, $"An error occurred while processing your request:{ex.Message}");
+        }
+    }
+
+
+    [HttpPost]
+    [Route("add/consultation")]
+    public IActionResult AddConsultation(ConsultationDTO consultationDTO)
+    {
+        try
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var consultation = DTOHelper.ConsultationDTOToConsultation(consultationDTO);
+
+            if (_patientService.AddConsultation(consultation))
+            {
+                return Ok($"Consultation for patient with CNP {consultationDTO.PatientCNP} has been successfully added to the database.");
+            }
+            else
+            {
+                return BadRequest("Failed to add consultation.");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"An error occurred while adding the consultation: {ex.Message}");
+            return StatusCode(500, $"An error occurred while processing your request: {ex.Message}");
         }
     }
 

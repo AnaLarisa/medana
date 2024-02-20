@@ -181,4 +181,39 @@ public class PatientRepository : IPatientRepository
         return true;
     }
 
+    public bool AddConsultation(Consultation consultation)
+    {
+        try 
+        {
+            var cnp = consultation.PatientCNP;
+            var medicalHistory = _dbContext.MedicalHistory.FirstOrDefault(mh => mh.CNP == cnp);
+
+            if (medicalHistory != null)
+            {
+                _dbContext.Consultations.Add(consultation);
+                if (medicalHistory.Consultations == null)
+                {
+                    medicalHistory.Consultations = new List<Consultation> { consultation };
+                }
+                else
+                {
+                    medicalHistory.Consultations.Add(consultation);
+                }
+
+                _dbContext.SaveChanges();
+                return true;
+            }
+            else
+            {
+                throw new Exception($"Patient {cnp} does not exist in the database.");
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"An error occurred while adding the consultation: {ex.Message}");
+            throw;
+        }
+        
+    }
+
 }

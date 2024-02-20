@@ -29,4 +29,8 @@ public class ConsultationDTO
 
     [Range(35.0, 42.0, ErrorMessage = "Invalid temperature value.")]
     public double Temperature { get; set; }
+
+    [Required]
+    [CNP]
+    public string PatientCNP { get; set; }
 }

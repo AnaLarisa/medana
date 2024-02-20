@@ -206,4 +206,21 @@ public static class DTOHelper
         return birthDate;
     }
 
+    public static Consultation ConsultationDTOToConsultation(ConsultationDTO consultationDTO)
+    {
+        return new Consultation
+        {
+            ConsultationDate = consultationDTO.ConsultationDate,
+            Symptoms = consultationDTO.Symptoms,
+            Diagnosis = consultationDTO.Diagnosis,
+            TreatmentPlan = consultationDTO.TreatmentPlan,
+            Notes = consultationDTO.Notes,
+            Prescriptions = consultationDTO.Prescriptions,
+            BloodPressure = consultationDTO.BloodPressure,
+            HeartRate = consultationDTO.HeartRate,
+            RespiratoryRate = consultationDTO.RespiratoryRate,
+            Temperature = consultationDTO.Temperature,
+            PatientCNP = consultationDTO.PatientCNP
+        };
+    }
 }

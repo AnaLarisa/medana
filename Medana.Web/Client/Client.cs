@@ -124,4 +124,27 @@ public class Client : IClient
         var errorMessage = await response.Content.ReadAsStringAsync();
         throw new Exception(errorMessage);
     }
+
+    public async Task<bool> AddConsultationAsync(ConsultationDTO consultationDTO)
+    {
+        var content = new StringContent(JsonSerializer.Serialize(consultationDTO), Encoding.UTF8, "application/json");
+        var response = await _client.PostAsync("Patient/add/consultation", content);
+
+        if (response.IsSuccessStatusCode)
+        {
+            var result = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<bool>(result, _jsonSerializerOptions);
+        }
+
+        var statusCode = response.StatusCode;
+        var errorMessage = await response.Content.ReadAsStringAsync();
+
+        var errorJson = JsonSerializer.Deserialize<JsonElement>(errorMessage);
+        if (errorJson.TryGetProperty("errors", out var errors))
+        {
+            throw new Exception($"The request failed with status {statusCode}. \nThe following errors have occurred: \n{errors}");
+        }
+
+        throw new Exception(errorMessage);
+    }
 }

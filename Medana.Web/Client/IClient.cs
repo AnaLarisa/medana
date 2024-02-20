@@ -6,6 +6,7 @@ namespace Medana.Web.Client;
 public interface IClient
 {
     Task<bool> AddPatientAsync(PatientDTO patientDto);
+    Task<bool> AddConsultationAsync(ConsultationDTO consultationDTO);
     Task<bool> DeletePatientAsync(string cnp);
     Task<IEnumerable<PatientDTO>> GetAllPatientsAsync();
     Task<PatientDTO> GetPatientByIdAsync(string cnp);

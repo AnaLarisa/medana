@@ -1,0 +1,83 @@
+﻿@page "add/consultation"
+@model Medana.Web.Pages.AddConsultationModel
+
+@{
+    ViewData["Title"] = "Add New Consultation";
+    var ErrorMessage = Model.ErrorMessage;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewData["Title"]</title>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <h2><b>@ViewData["Title"]</b></h2>
+        <div class="mt-5">
+            @if (!string.IsNullOrEmpty(ErrorMessage))
+            {
+                <div class="alert alert-danger" role="alert">
+                    @ErrorMessage
+                </div>
+            }
+            <form method="post">
+                <div class="form-group">
+                    <label for="PatientCNP">CNP:</label>
+                    <input asp-for="Consultation.PatientCNP" class="form-control" />
+                    <span asp-validation-for="Consultation.PatientCNP" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label for="Symptoms">Symptoms and Complaints:</label>
+                    <textarea asp-for="Consultation.Symptoms" class="form-control" rows="3"></textarea>
+                    <span asp-validation-for="Consultation.Symptoms" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label for="Diagnosis">Diagnosis:</label>
+                    <input asp-for="Consultation.Diagnosis" class="form-control" />
+                    <span asp-validation-for="Consultation.Diagnosis" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label for="TreatmentPlan">Treatment Plan:</label>
+                    <textarea asp-for="Consultation.TreatmentPlan" class="form-control" rows="3"></textarea>
+                    <span asp-validation-for="Consultation.TreatmentPlan" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label for="Notes">Notes:</label>
+                    <textarea asp-for="Consultation.Notes" class="form-control" rows="3"></textarea>
+                    <span asp-validation-for="Consultation.Notes" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label for="Prescriptions">Prescriptions:</label>
+                    <textarea asp-for="Consultation.Prescriptions" class="form-control" rows="3"></textarea>
+                    <span asp-validation-for="Consultation.Prescriptions" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label for="BloodPressure">Blood Pressure:</label>
+                    <input asp-for="Consultation.BloodPressure" class="form-control" />
+                    <span asp-validation-for="Consultation.BloodPressure" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label for="HeartRate">Heart Rate:</label>
+                    <input asp-for="Consultation.HeartRate" class="form-control" />
+                    <span asp-validation-for="Consultation.HeartRate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label for="RespiratoryRate">Respiratory Rate:</label>
+                    <input asp-for="Consultation.RespiratoryRate" class="form-control" />
+                    <span asp-validation-for="Consultation.RespiratoryRate" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label for="Temperature">Temperature:</label>
+                    <input asp-for="Consultation.Temperature" class="form-control" />
+                    <span asp-validation-for="Consultation.Temperature" class="text-danger"></span>
+                </div>
+                <button type="submit" class="btn btn-primary mt-5">Submit</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
