@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Medana.API.Entities;
+﻿using Medana.API.Entities;
 using Medana.API.Entities.DTOs;
 
 namespace Medana.API.Helpers;
@@ -90,6 +88,12 @@ public static class DTOHelper
         return consultationDTOs.Select(dto => ConsultationDTOToConsultation(dto, cnp)).ToList();
     }
 
+    public static IList<ConsultationDTO> ConsultationListToConsultationDTOs(IList<Consultation> consultations)
+    {
+        if (consultations == null) return null;
+        return consultations.Select(c => MapToConsultationDTO(c)).ToList();
+    }
+
     public static Medication? MedicationDTOToMedication(MedicationDTO medicationDTO)
     {
         if (medicationDTO == null) return null;
@@ -175,7 +179,8 @@ public static class DTOHelper
             BloodPressure = consultation.BloodPressure,
             HeartRate = consultation.HeartRate,
             RespiratoryRate = consultation.RespiratoryRate,
-            Temperature = consultation.Temperature
+            Temperature = consultation.Temperature,
+            PatientCNP = consultation.PatientCNP
         };
     }
     

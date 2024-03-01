@@ -6,14 +6,12 @@ namespace Medana.Pages;
 
 public class IndexModel : PageModel
 {
-    private ILogger<IndexModel> _logger;
     private IClient _client;
 
     public IList<PatientDTO> Patients { get; set; }
 
-    public IndexModel(ILogger<IndexModel> logger, IClient client)
+    public IndexModel(IClient client)
     {
-        _logger = logger;
         _client = client;
     }
 

@@ -1,4 +1,3 @@
-using System.Threading.Tasks;
 using Medana.API.Entities.DTOs;
 using Medana.Web.Client;
 using Microsoft.AspNetCore.Mvc;

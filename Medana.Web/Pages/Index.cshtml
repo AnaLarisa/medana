@@ -18,41 +18,42 @@ var patients = Model.Patients;
     <div class="container mt-5">
         <h2><b>Patients List</b></h2>
 
-        <div class="input-group mb-4">
-            <input type="text" class="form-control" placeholder="Search CNP..." id="searchInput">
-            <div class="input-group-append">
-                <button class="btn btn-primary" type="button" onclick="searchCNP()">Search</button>
+        <div>
+            <div class="input-group mb-4">
+                <input type="text" class="form-control" placeholder="Search CNP..." id="searchInput">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="button" onclick="searchCNP()">Search</button>
+                </div>
             </div>
-        </div>
 
-        <table class="table table-bordered table-hover table-responsive-xl centered-table mt-5" border="1">
-            <thead class="table-light">
-                <tr>
-                    <th>CNP</th>
-                    <th>First Name</th>
-                    <th>Last Name</th>
-                    <th>Date of Birth</th>
-                    <th>Sex</th>
-                    <th>Address</th>
-                    <th>Phone Number</th>
-                </tr>
-            </thead>
-            <tbody class="table-hover">
-                <!-- Loop through patients and generate rows -->
-                @foreach (var patient in patients)
-                {
+            <table class="table table-bordered table-hover table-responsive-xl centered-table mt-5" border="1">
+                <thead class="table-light">
                     <tr>
-                        <td><a asp-page="/PatientDetails" asp-route-id="@patient.CNP">@patient.CNP</a></td>
-                        <td>@patient.PersonalInformation.FirstName</td>
-                        <td>@patient.PersonalInformation.LastName</td>
-                        <td>@patient.PersonalInformation.DateOfBirth.ToString("yyyy-MM-dd")</td>
-                        <td>@patient.PersonalInformation.Sex</td>
-                        <td>@patient.PersonalInformation.Address</td>
-                        <td>@patient.PersonalInformation.PhoneNumber</td>
+                        <th>CNP</th>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Birth Date</th>
+                        <th>Sex</th>
+                        <th>Address</th>
+                        <th>Phone Number</th>
                     </tr>
-                }
-            </tbody>
-        </table>
+                </thead>
+                <tbody class="table-hover">
+                    @foreach (var patient in patients)
+                    {
+                        <tr>
+                            <td><a asp-page="/PatientDetails" asp-route-id="@patient.CNP">@patient.CNP</a></td>
+                            <td>@patient.PersonalInformation.FirstName</td>
+                            <td>@patient.PersonalInformation.LastName</td>
+                            <td>@patient.PersonalInformation.DateOfBirth.ToString("yyyy-MM-dd")</td>
+                            <td>@patient.PersonalInformation.Sex</td>
+                            <td>@patient.PersonalInformation.Address</td>
+                            <td>@patient.PersonalInformation.PhoneNumber</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <script>

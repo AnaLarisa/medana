@@ -1,0 +1,132 @@
+﻿@page
+@model Medana.Web.Pages.ReportsModel
+
+@{
+    var consultations = Model.Consultations;
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical reports</title>
+</head>
+
+<body>
+    <div class="container mt-5">
+        <h2><b>Medical reports</b></h2>
+        <div class="mt-5">
+            <form method="post" asp-page-handler="DownloadReport" class="mt-2">
+                <button type="submit" class="btn btn-primary mb-2">Download Report</button>
+            </form>
+            <div class="row">
+                <div class="col-md-6 section-spacing">
+                    <div class="form-group d-flex">
+                        <label for="diagnosticsInput" class="mr-2"><b>Search Diagnosis:</b></label>
+                        <input type="text" class="form-control" id="diagnosticsInput" onkeyup="searchDiagnostics()" placeholder="Search Diagnosis...">
+                    </div>
+                </div>
+                <div class="col-md-6 section-spacing">
+                    <div class="form-group d-flex">
+                        <label for="medicationsInput" class="mr-2"><b>Search Medication:</b></label>
+                        <input type="text" class="form-control" id="medicationsInput" onkeyup="searchMedications()" placeholder="Search Medication...">
+                    </div>
+                </div>
+            </div>
+
+            </div>
+            
+            <table id="consultationsTable" class="table table-bordered table-hover table-responsive-xl centered-table mt-5" border="1">
+                <thead>
+                    <tr>
+                        <th>Consultation Date</th>
+                        <th>Patient CNP</th>
+                        <th>Symptoms</th>
+                        <th>Diagnosis</th>
+                        <th>Treatment Plan</th>
+                        <th>Notes</th>
+                        <th>Medication</th>
+                        <th>Blood Pressure</th>
+                        <th>Heart Rate</th>
+                        <th>Respiratory Rate</th>
+                        <th>Temperature</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var consultation in Model.Consultations)
+                    {
+                        <tr>
+                            <td>@consultation.ConsultationDate</td>
+                            <td><a asp-page="/PatientDetails" asp-route-id="@consultation.PatientCNP">@consultation.PatientCNP</a></td>
+                            <td>@consultation.Symptoms</td>
+                            <td>@consultation.Diagnosis</td>
+                            <td>@consultation.TreatmentPlan</td>
+                            <td>@consultation.Notes</td>
+                            <td>@consultation.Prescriptions</td>
+                            <td>@consultation.BloodPressure</td>
+                            <td>@consultation.HeartRate</td>
+                            <td>@consultation.RespiratoryRate</td>
+                            <td>@consultation.Temperature</td>
+                        </tr>
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="11" id="consultationCount"><b>Total consultations: @Model.Consultations.Count()</b></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function searchDiagnostics() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("diagnosticsInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("consultationsTable");
+            tr = table.getElementsByTagName("tr");
+
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[3];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+            updateConsultationCount();
+        }
+
+        function searchMedications() {
+            var input, filter, table, tr, td, i, txtValue;
+            input = document.getElementById("medicationsInput");
+            filter = input.value.toUpperCase();
+            table = document.getElementById("consultationsTable");
+            tr = table.getElementsByTagName("tr");
+
+            for (i = 0; i < tr.length; i++) {
+                td = tr[i].getElementsByTagName("td")[6];
+                if (td) {
+                    txtValue = td.textContent || td.innerText;
+                    if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                        tr[i].style.display = "";
+                    } else {
+                        tr[i].style.display = "none";
+                    }
+                }
+            }
+            updateConsultationCount();
+        }
+
+        function updateConsultationCount() {
+            var visibleRows = document.querySelectorAll("#consultationsTable tbody tr[style='']");
+            document.getElementById("consultationCount").textContent = "Total consultations: " + visibleRows.length;
+        }
+    </script>
+</body>
+</html>

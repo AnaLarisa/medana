@@ -16,4 +16,5 @@ public interface IPatientService
     public bool UpdateMedicalHistory(MedicalHistoryDTO medicalHistoryDTO, string cnp);
     public bool UpdateInsuranceInformation(InsuranceInformationDTO insuranceInformationDTO, string cnp);
     bool AddConsultation(Consultation consultation);
+    IEnumerable<ConsultationDTO> GetAllConsultations();
 }

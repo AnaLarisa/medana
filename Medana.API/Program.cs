@@ -2,7 +2,6 @@ using Medana.API.Entities;
 using Medana.API.Repositories;
 using Medana.API.Services;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 

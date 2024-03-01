@@ -87,4 +87,17 @@ public class PatientService : IPatientService
         var result = _patientRepository.AddConsultation(consultation);
         return result;
     }
+
+    public IEnumerable<ConsultationDTO> GetAllConsultations()
+    {
+        var consultations = _patientRepository.GetAllConsultations();
+        if (consultations.Count < 1)
+        {
+            throw new Exception("No consultations found in the database.");
+        }
+
+        var consultationsDTO = DTOHelper.ConsultationListToConsultationDTOs(consultations);
+
+        return consultationsDTO;        
+    }
 }

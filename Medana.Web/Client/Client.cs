@@ -29,6 +29,21 @@ public class Client : IClient
         throw new Exception(errorMessage);
     }
 
+
+    public async Task<IEnumerable<ConsultationDTO>> GetAllConsultationsAsync()
+    {
+        var response = await _client.GetAsync("Patient/all/consultations");
+
+        if (response.IsSuccessStatusCode)
+        {
+            var json = await response.Content.ReadAsStringAsync();
+            return JsonSerializer.Deserialize<IEnumerable<ConsultationDTO>>(json, _jsonSerializerOptions);
+        }
+
+        var errorMessage = await response.Content.ReadAsStringAsync();
+        throw new Exception(errorMessage);
+    }
+
     public async Task<PatientDTO> GetPatientByIdAsync(string cnp)
     {
         var response = await _client.GetAsync($"Patient/{cnp}");

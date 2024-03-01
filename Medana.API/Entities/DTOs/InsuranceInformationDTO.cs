@@ -1,5 +1,4 @@
-﻿using Medana.API.Attributes;
-using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Medana.API.Entities.DTOs;
 

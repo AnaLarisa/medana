@@ -37,12 +37,9 @@ body {
 
 .centered-table {
     margin: auto;
-    position: absolute;
-    top: 40%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    position: center;
     max-height: 80vh;
-    max-width: 70%;
+    max-width: 100%;
     padding: 20px;
     border: 2px solid #ccc;
     background-color: #fff;
@@ -52,5 +49,9 @@ body {
 .search 
 {
     margin-bottom:auto
+}
+
+.section-spacing {
+    margin-bottom: 20px;
 }
 

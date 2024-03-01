@@ -64,14 +64,13 @@ public class PatientDetailsModel : PageModel
         var page = await browser.NewPageAsync();
         await page.GoToAsync(url);
 
-        // Execută JavaScript pentru a ascunde butoanele
         await page.EvaluateExpressionAsync(@"
         document.querySelectorAll('button').forEach(function(button) {
             button.style.display = 'none';
         });
     ");
 
-        var fileName = "medical_record.pdf";
+        var fileName = "full_medical_record.pdf";
         var outputPath = Path.Combine(Path.GetTempPath(), fileName);
 
         await page.PdfAsync(outputPath);

@@ -1,5 +1,4 @@
-﻿using Medana.API.Entities;
-using Medana.API.Entities.DTOs;
+﻿using Medana.API.Entities.DTOs;
 
 namespace Medana.Web.Client;
 
@@ -13,4 +12,5 @@ public interface IClient
     Task<bool> UpdateInsuranceInformationAsync(string cnp, InsuranceInformationDTO insuranceInformationDTO);
     Task<bool> UpdateMedicalHistoryAsync(string cnp, MedicalHistoryDTO medicalHistoryDTO);
     Task<bool> UpdatePersonalInformationAsync(string cnp, PersonalInformationDTO personalInformationDTO);
+    Task<IEnumerable<ConsultationDTO>> GetAllConsultationsAsync();
 }

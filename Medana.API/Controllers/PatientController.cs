@@ -12,7 +12,7 @@ public class PatientController : ControllerBase
     private readonly ILogger<PatientController> _logger;
     private readonly IPatientService _patientService;
 
-    public PatientController(ILogger<PatientController> logger, IPatientService patientService )
+    public PatientController(ILogger<PatientController> logger, IPatientService patientService)
     {
         _logger = logger;
         _patientService = patientService;
@@ -22,7 +22,7 @@ public class PatientController : ControllerBase
     [Route("all")]
     public IActionResult GetAllPatients()
     {
-        try 
+        try
         {
             var patients = _patientService.GetAllPatientsWithDetails();
             return Ok(patients);
@@ -30,6 +30,22 @@ public class PatientController : ControllerBase
         catch (Exception ex)
         {
             _logger.LogError(ex, "An error occurred while trying to retrieve all patients.");
+            return NotFound(ex.Message);
+        }
+    }
+
+    [HttpGet]
+    [Route("all/consultations")]
+    public IActionResult GetAllConsultations()
+    {
+        try
+        {
+            var consultations = _patientService.GetAllConsultations();
+            return Ok(consultations);
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "An error occurred while trying to retrieve all consultations.");
             return NotFound(ex.Message);
         }
     }

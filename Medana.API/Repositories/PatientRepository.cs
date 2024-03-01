@@ -216,4 +216,10 @@ public class PatientRepository : IPatientRepository
         
     }
 
+    public IList<Consultation> GetAllConsultations()
+    {
+        var consultations = _dbContext.Consultations.ToList();
+        return consultations;
+    }
+
 }

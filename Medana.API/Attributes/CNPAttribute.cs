@@ -1,5 +1,4 @@
-﻿using Medana.API.Repositories;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Medana.API.Attributes;
 
